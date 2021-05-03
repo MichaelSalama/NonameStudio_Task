@@ -16,6 +16,7 @@ MonoBehaviour:
   _isInJump: 0
   _isSliding: 0
   _isDecelerate: 1
-  _groundNormal: {x: 0, y: 0}
+  _isOnSlope: 0
+  _groundNormal: {x: -0, y: 0}
   _canMoveRight: 1
   _canMoveLeft: 1

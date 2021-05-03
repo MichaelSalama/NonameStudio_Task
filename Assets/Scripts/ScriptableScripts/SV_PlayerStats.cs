@@ -30,6 +30,8 @@ public class MovementStats
     public float currentGravity = 0;
     public float maxGravity = 9;
     public float GravityTime = 3f;
+   
+
 
     
 

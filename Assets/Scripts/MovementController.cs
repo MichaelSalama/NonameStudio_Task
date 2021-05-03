@@ -7,11 +7,7 @@ public class MovementController : MonoBehaviour
     [SerializeField] protected SV_PlayerManager playerManager = null;
     [SerializeField] protected SV_PlayerStats playerStats = null;
 
-    [Space]
-    [SerializeField] protected float _slopeAngleThreshold = 35;
-
     protected MovePlayerInput movePlayerInput = null;
-
 
     protected float accRatePerSec;
     protected float decRatePerSec;
@@ -39,24 +35,15 @@ public class MovementController : MonoBehaviour
 
     public void HandleMovement()
     {
-        //if (playerManager.IsDecelerate)
-        //{
-        //    //start deceleration
-
-        //}
-        //else if (!playerManager.IsDecelerate)
-        //{
-        //stop deceleration
-
         HandleGroundMovement();
         HandleVerticleMovement();
-        //}
     }
 
     protected void HandleGroundMovement()
     {
-        Vector2 dir = Vector2.zero;
-        //if (!playerManager.IsGrounded) return;
+        //if (playerManager.IsOnSlope) return;
+
+        Vector2 dir;
         float right;
         float left;
 
@@ -69,7 +56,16 @@ public class MovementController : MonoBehaviour
             left = movePlayerInput.input.leftAxis;
         else left = 0;
 
-        dir = new Vector2(right + left, 0);
+
+        float slopeAngle = Vector2.Angle(playerManager.GroundNormal, Vector2.up);
+        print(slopeAngle);
+
+        float y = Mathf.Abs(Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * (right + left));
+        float x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * (right + left);
+        dir = new Vector2(x, y);
+
+                                                 // find a way to smooth the downmovement!
+
         if (movePlayerInput.input.IsDirectionKeyDown())
         {
             playerManager.IsDecelerate = false;
@@ -94,10 +90,11 @@ public class MovementController : MonoBehaviour
 
     protected void HandleVerticleMovement()
     {
-        if (playerManager.IsGrounded) return;
+        if (playerManager.IsGrounded || playerManager.IsOnSlope) return;
 
         playerStats.movementStats.SetCurrentGravity(playerStats.movementStats.currentGravity + gravityPerSec * Time.deltaTime);
         playerStats.movementStats.SetCurrentGravity(Mathf.Min(playerStats.movementStats.currentGravity, playerStats.movementStats.maxGravity));
         transform.Translate(playerStats.movementStats.currentGravity * Vector2.down * Time.deltaTime);
     }
 }
+

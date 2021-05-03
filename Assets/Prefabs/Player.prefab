@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8066314897117513739}
   - component: {fileID: 8066314897117513847}
   - component: {fileID: 8066314897117513736}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +146,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerManager: {fileID: 11400000, guid: d2d0ae0867ea4e742be3b77f632e3f1e, type: 2}
   playerStats: {fileID: 11400000, guid: 5eb3473c49a107c4790a7b7572e5b094, type: 2}
-  _slopeAngleThreshold: 35
 --- !u!114 &8066314897117513736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,8 +159,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerManager: {fileID: 11400000, guid: d2d0ae0867ea4e742be3b77f632e3f1e, type: 2}
-  floorCollider: {fileID: 0}
   layerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 192
   raycastOffset: 0.01
+  thresholdAngle: 15
