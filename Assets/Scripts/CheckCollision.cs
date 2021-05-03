@@ -28,27 +28,28 @@ public class CheckCollision : MonoBehaviour
 
     void CollisionCheck()
     {
-        Vector2 size = new Vector2(_collider.size.x + raycastOffset, _collider.size.y);
+        Vector2 size = new Vector2(raycastOffset ,_collider.size.y);
+        Vector2 originR = new Vector2(transform.position.x + _collider.bounds.extents.x, transform.position.y);
 
         RaycastHit2D rightHitInfo;
-        rightHitInfo = Physics2D.BoxCast(transform.position, size, 0, Vector2.right, 0, layerMask);
+        rightHitInfo = Physics2D.BoxCast(originR, size, 0, Vector2.right, raycastOffset, layerMask);
         if (rightHitInfo)
         {
             playerManager.CanMoveRight = false;
             playerManager.CanMoveLeft = true;
         }
 
+        Vector2 originL = new Vector2(transform.position.x - _collider.bounds.extents.x, transform.position.y);
         RaycastHit2D leftHitInfo;
-        leftHitInfo = Physics2D.BoxCast(transform.position, size, 0, Vector2.left, 0, layerMask);
+        leftHitInfo = Physics2D.BoxCast(originL, size, 0, Vector2.left, raycastOffset, layerMask);
         if (leftHitInfo)
         {
-            playerManager.CanMoveLeft = true;
-            playerManager.CanMoveRight = false;
+            playerManager.CanMoveLeft = false;
+            playerManager.CanMoveRight = true;
         }
 
         if (!rightHitInfo && !leftHitInfo)
             playerManager.CanMoveLeft = playerManager.CanMoveRight = true;
-
     }
 
     void GroundCheck()
